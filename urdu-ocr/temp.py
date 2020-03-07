@@ -20,12 +20,12 @@ for col in range(cols):
 		start_index_col = col
 		break
 
-for row in range(rows-1, 0, -1):
+for row in range(rows-10, 0, -1):
 	if img[row, 0] == 0:
 		end_index_row = row
 		break
 
-for col in range(cols-1, 0, -1):
+for col in range(cols-10, 0, -1):
 	if img[0, col] == 0:
 		end_index_col = col
 		break
@@ -35,12 +35,17 @@ for col in range(cols-1, 0, -1):
 # print(end_index_col)
 # print(end_index_row)
 
-# col_img[start_index_row, start_index_col] = (0,255,0)
-# col_img[end_index_row, end_index_col] = (0,255,0)
+col_img[start_index_row, start_index_col] = (0,255,0)
+col_img[end_index_row, end_index_col] = (0,255,0)
 
 img = img[start_index_row:end_index_row, start_index_col:end_index_col]
 
-x_grids = 7
+# cv2.namedWindow('hough', cv2.WINDOW_NORMAL)
+# cv2.resizeWindow('hough', 600,600)
+# cv2.imshow("hough", img)
+# cv2.waitKey(0)
+
+x_grids = 16
 y_grids = 10
 
 rows, cols = img.shape
