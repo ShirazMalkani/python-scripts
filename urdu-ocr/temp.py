@@ -4,10 +4,11 @@ import numpy as np
 file_path = './hough.jpg'
 col_img = cv2.imread(file_path)
 img = cv2.cvtColor(col_img, cv2.COLOR_BGR2GRAY)
-rows, cols = img.shape
 # print(rows, cols)
 
 ret,img = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+img = img[20:-20, 20:-20]
+rows, cols = img.shape
 start_index_row = 0
 start_index_col = 0
 for row in range(rows):
@@ -40,10 +41,10 @@ col_img[end_index_row, end_index_col] = (0,255,0)
 
 img = img[start_index_row:end_index_row, start_index_col:end_index_col]
 
-# cv2.namedWindow('hough', cv2.WINDOW_NORMAL)
-# cv2.resizeWindow('hough', 600,600)
-# cv2.imshow("hough", img)
-# cv2.waitKey(0)
+cv2.namedWindow('hough', cv2.WINDOW_NORMAL)
+cv2.resizeWindow('hough', 600,600)
+cv2.imshow("hough", img)
+cv2.waitKey(0)
 
 x_grids = 16
 y_grids = 10
