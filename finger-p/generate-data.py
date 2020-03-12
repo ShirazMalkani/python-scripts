@@ -3,11 +3,11 @@ import sys
 from shutil import copyfile
 from PIL import Image
 
-new_folder = "/home/shiraz/Downloads/SOCOFing/Altered/data-hard"
+new_folder = "./data"
 male_folder = os.path.join(new_folder, 'male')
 female_folder = os.path.join(new_folder, 'female')
 
-main_folder = "/home/shiraz/Downloads/SOCOFing/Altered/Altered-Hard"
+main_folder = "./SOCOFing/Altered/Altered-Easy"
 
 main_folder_entries = os.listdir(main_folder)
 male_counter = 0

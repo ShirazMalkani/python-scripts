@@ -44,7 +44,7 @@ for membership_number_from_file in f:
 	submit.send_keys(Keys.RETURN)
 
 	o_f.write("membership_no = " + membership_number_from_file[:-1] + "\t")	
-	time.sleep(10)
+	time.sleep(5)
 	membership_no = driver.find_element_by_id("clientNo")
 	membership_no.send_keys(membership_number_from_file)
 

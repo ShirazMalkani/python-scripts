@@ -1,68 +1,9 @@
 # import the necessary packages
 import numpy as np
 import cv2
-import math
-
-
-def post_process_images(images):
-	new_images = []
-	for image in images:
-		rows, cols = image.shape
-		center_row = rows // 2
-		center_col = cols // 2
-		start_x = 0
-		start_y = 0
-		end_x = cols
-		end_y = rows
-		# print(rows, cols)
-		# print(center_row, center_col)
-		for y in range(center_col):
-			# print(image[10, y])
-			if image[10, y] == 0:
-				while image[10, y] != 255:
-					y = y + 1
-				start_x = y
-				break
-		for x in range(center_row):
-		# 	print(image[x, 10])
-			if image[x, 10] == 0:
-				while image[x, 10] != 255:
-					x = x + 1
-				start_y = x
-				break
-
-		for y in range(center_col, cols, 1):
-			if image[10, y] == 0:
-				end_x = y
-				break
-		for x in range(center_row, rows, 1):
-			if image[x, 10] == 0:
-				end_y = x
-				break
-		end_x = end_x
-		end_y = end_y
-		print("Start x " + str(start_x))
-		print("Start y " + str(start_y))
-		print("End x " + str(end_x))
-		print("End y " + str(end_y))
-
-		# cv2.namedWindow('image01', cv2.WINDOW_NORMAL)
-		# cv2.resizeWindow('image01', 400,400)
-		# cv2.imshow("image01", image)
-
-		image = image[start_y:end_y, start_x:end_x]
-		
-		# cv2.namedWindow('image', cv2.WINDOW_NORMAL)
-		# cv2.resizeWindow('image', 400,400)
-		# cv2.imshow("image", image)
-		# cv2.waitKey(0)
-		
-		print("\n\n\n\n")
-		new_images.append(image[10:-10, 10:-10])
-	return new_images
 
 # load the image from disk
-image = cv2.imread("./vertical_num.jpg")
+image = cv2.imread("./horizontal_num.jpg")
 
 # convert the image to grayscale and flip the foreground
 # and background to ensure foreground is now "white" and
@@ -98,8 +39,8 @@ else:
 (h, w) = image.shape[:2]
 center = (w // 2, h // 2)
 M = cv2.getRotationMatrix2D(center, angle, 1.0)
-# print("\n\n\n\n\n")
-# print(M)
+print("\n\n\n\n\n")
+print(M)
 rotated = cv2.warpAffine(image, M, (w, h),
 	flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
 
@@ -211,12 +152,10 @@ for line in filtered_lines:
 # col_img = cv2.imread(file_path)
 col_img = img
 img = cv2.cvtColor(col_img, cv2.COLOR_BGR2GRAY)
-
-img = img[20:-20, 20:-20]
+rows, cols = img.shape
+# print(rows, cols)
 
 ret,img = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
-
-rows, cols = img.shape
 start_index_row = 0
 start_index_col = 0
 for row in range(rows):
@@ -251,16 +190,16 @@ img = img[start_index_row:end_index_row, start_index_col:end_index_col]
 
 # cv2.namedWindow('hough', cv2.WINDOW_NORMAL)
 # cv2.resizeWindow('hough', 600,600)
-# cv2.imshow("hough", col_img)
+# cv2.imshow("hough", img)
 # cv2.waitKey(0)
 
-x_grids = 10
-y_grids = 16
+x_grids = 16
+y_grids = 10
 
 rows, cols = img.shape
 
-x_next_value = math.ceil(rows / y_grids)
-y_next_value = math.ceil(cols / x_grids)
+x_next_value = rows // y_grids
+y_next_value = cols // x_grids
 
 images = []
 x_values = []
@@ -278,11 +217,12 @@ for i in range(x_grids):
 	y = y + y_next_value
 y_values.append(y)
 
+print(x_values)
+print(y_values)
+
 for j in range(y_grids):
 	for i in range(x_grids):
 		images.append(img[x_values[j]:x_values[j+1], y_values[i]:y_values[i+1]])
-
-images = post_process_images(images)
 
 folder = './pics/'
 for i in range(len(images)):

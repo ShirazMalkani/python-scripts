@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 
 # load the image from disk
-image = cv2.imread("./vertical_num.jpg")
+image = cv2.imread("./horizontal_num.jpg")
 
 # convert the image to grayscale and flip the foreground
 # and background to ensure foreground is now "white" and
